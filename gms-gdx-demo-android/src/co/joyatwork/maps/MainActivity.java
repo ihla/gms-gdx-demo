@@ -37,9 +37,6 @@ public class MainActivity extends AndroidApplication {
         
         initialize(new GmsGdxDemo(), cfg);
         
-        mapView = new MapView(this);
-        mapView.onCreate(savedInstanceState);
-
         if (graphics.getView() instanceof SurfaceView) {
             SurfaceView glView = (SurfaceView) graphics.getView();
             // force alpha channel
@@ -85,7 +82,13 @@ public class MainActivity extends AndroidApplication {
     }
 
 	private void addMapToView(SurfaceView glView, Bundle savedInstanceState) {
-        addContentView(mapView, 
+        mapView = new MapView(this);
+        //mapView.onCreate(savedInstanceState);
+        //addContentView(mapView, 
+        	//	new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
+        setContentView(mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.addView(glView, 
         		new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
         setUpMapIfNeeded();
 	}
