@@ -47,7 +47,7 @@ public class MainActivity extends AndroidApplication {
             glView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
             // Have to do this or else GlSurfaceView wont be transparent
             glView.setZOrderOnTop(true);
-            //addMapToView(glView, savedInstanceState);
+            addMapToView(glView, savedInstanceState);
             }
         else {
             Gdx.app.error(TAG, "failed to force TRANSLUCENT on SurfaceView");
