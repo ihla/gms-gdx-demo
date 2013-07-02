@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 
+import com.android.debug.hv.ViewServer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -42,19 +43,22 @@ public class MainActivity extends AndroidApplication {
             // force alpha channel
             Gdx.app.log(TAG, "forcing TRANSLUCENT on SurfaceView");
             glView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-            // Have to do this or else GlSurfaceView wont be transparent
+            // Have to do this or else GlSurfaceView will be hidden
             glView.setZOrderOnTop(true);
             addMapToView(glView, savedInstanceState);
             }
         else {
             Gdx.app.error(TAG, "failed to force TRANSLUCENT on SurfaceView");
 		}
+        
+        ViewServer.get(this).addWindow(this);
     }
     
     @Override
     protected void onResume() {
         mapView.onResume();
         super.onResume();
+        ViewServer.get(this).setFocusedWindow(this);
     }
 
     @Override
@@ -67,6 +71,7 @@ public class MainActivity extends AndroidApplication {
     protected void onDestroy() {
         mapView.onDestroy();
         super.onDestroy();
+        ViewServer.get(this).removeWindow(this);
     }
 
     @Override
@@ -83,13 +88,12 @@ public class MainActivity extends AndroidApplication {
 
 	private void addMapToView(SurfaceView glView, Bundle savedInstanceState) {
         mapView = new MapView(this);
-        //mapView.onCreate(savedInstanceState);
-        //addContentView(mapView, 
-        	//	new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
-        setContentView(mapView);
         mapView.onCreate(savedInstanceState);
-        mapView.addView(glView, 
-        		new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
+        addContentView(mapView, 
+        	new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
+        // this call is necessary in order to set correct z order of the glView
+        // glView must be on the top of View hierarchy
+        glView.getParent().bringChildToFront(glView);
         setUpMapIfNeeded();
 	}
 	
