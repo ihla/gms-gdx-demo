@@ -33,7 +33,7 @@
 	         PC: AIzaSyDY-OoYxZaGKWvaulgkVw98RO-ZSAOsocA
 	         -->
 	    <meta-data android:name="com.google.android.maps.v2.API_KEY"
-	    android:value="AIzaSyCX9h2yzsz-8fwqUA75BAKAWqyYTHR3vqo"/>
+	    android:value="AIzaSyDY-OoYxZaGKWvaulgkVw98RO-ZSAOsocA"/>
 	    
         <activity
             android:name=".MainActivity"

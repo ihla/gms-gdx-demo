@@ -2,6 +2,8 @@ package co.joyatwork.maps;
 
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 
@@ -85,6 +87,13 @@ public class MainActivity extends AndroidApplication {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		Log.d(TAG, "dispatchTouchEvent");
+		return super.dispatchTouchEvent(ev);
+		//return mapView.dispatchTouchEvent(ev);
+	}
 
 	private void addMapToView(SurfaceView glView, Bundle savedInstanceState) {
         mapView = new MapView(this);
